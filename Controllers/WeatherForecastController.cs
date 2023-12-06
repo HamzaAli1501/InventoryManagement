@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using InventoryManagement.Models;
+using InventoryManagement.Service;
+using Microsoft.AspNetCore.Mvc;
 
 namespace InventoryManagement.Controllers;
 
@@ -12,10 +14,12 @@ public class WeatherForecastController : ControllerBase
     };
 
     private readonly ILogger<WeatherForecastController> _logger;
+    private IInventoryService _service;
 
-    public WeatherForecastController(ILogger<WeatherForecastController> logger)
+    public WeatherForecastController(ILogger<WeatherForecastController> logger, IInventoryService service)
     {
         _logger = logger;
+        _service = service;
     }
 
     [HttpGet]

@@ -1,6 +1,6 @@
 ﻿namespace InventoryManagement.Models;
 
-public partial class Purchase
+public sealed partial class Purchase
 {
     public int PurchaseId { get; set; }
 
@@ -16,5 +16,5 @@ public partial class Purchase
 
     public string? InvoiceNumber { get; set; }
 
-    public virtual Product? Product { get; set; }
+    public Product? Product { get; set; }
 }

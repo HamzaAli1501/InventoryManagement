@@ -1,6 +1,6 @@
 ﻿namespace InventoryManagement.Models;
 
-public partial class Sale
+public sealed partial class Sale
 {
     public int SaleId { get; set; }
 
@@ -18,5 +18,5 @@ public partial class Sale
 
     public decimal? TotalAmount { get; set; }
 
-    public virtual Product? Product { get; set; }
+    public Product? Product { get; set; }
 }

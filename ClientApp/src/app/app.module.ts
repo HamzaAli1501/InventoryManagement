@@ -1,32 +1,32 @@
-import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {FormsModule} from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
-import {RouterModule} from '@angular/router';
+import {BrowserModule} from '@angular/platform-browser';
 
+import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {NavMenuComponent} from './nav-menu/nav-menu.component';
-import {HomeComponent} from './home/home.component';
-import {CounterComponent} from './counter/counter.component';
-import {FetchDataComponent} from './fetch-data/fetch-data.component';
+import {DashboardComponent} from './pages/dashboard/dashboard.component';
+import {NewSaleComponent} from './pages/new-sale/new-sale.component';
+import {SaleListComponent} from './pages/sale-list/sale-list.component';
+import {NewPurchaseComponent} from './pages/new-purchase/new-purchase.component';
+import {PurchaseListComponent} from './pages/purchase-list/purchase-list.component';
+import {StockComponent} from './pages/stock/stock.component';
+import {HttpClientModule} from '@angular/common/http';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavMenuComponent,
-    HomeComponent,
-    CounterComponent,
-    FetchDataComponent
+    DashboardComponent,
+    NewSaleComponent,
+    SaleListComponent,
+    NewPurchaseComponent,
+    PurchaseListComponent,
+    StockComponent
   ],
   imports: [
-    BrowserModule.withServerTransition({appId: 'ng-cli-universal'}),
+    BrowserModule,
+    AppRoutingModule,
     HttpClientModule,
-    FormsModule,
-    RouterModule.forRoot([
-      {path: '', component: HomeComponent, pathMatch: 'full'},
-      {path: 'counter', component: CounterComponent},
-      {path: 'fetch-data', component: FetchDataComponent},
-    ])
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,0 +1,49 @@
+<div class="card">
+  <div class="card-header bg-primary">
+    New Purchase
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-3">
+        <label for="">Invoice No</label>
+        <input [(ngModel)]="purchaseObj.invoiceNo" class="form-control" type="text">
+      </div>
+      <div class="col-3">
+        <label for="">Supplier</label>
+        <input [(ngModel)]="purchaseObj.supplierName" class="form-control" type="text">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-3">
+        <label for="">Purchase Date</label>
+        <input [(ngModel)]="purchaseObj.purchaseDate" class="form-control" type="date">
+      </div>
+
+    </div>
+    <div class="row">
+      <div class="col-3">
+        <label for="">Select Product</label>
+        <select [(ngModel)]="purchaseObj.productId" class="form-control">
+          <option value="">Select Product</option>
+          <option *ngFor="let item of productList" [value]="item.productId"> {{item.productName}}</option>
+        </select>
+      </div>
+      <div class="col-3">
+        <label for="">Quantity</label>
+        <input [(ngModel)]="purchaseObj.quantity" class="form-control" type="number">
+      </div>
+      <div class="col-3">
+        <label for="">Total Amount</label>
+        <input [(ngModel)]="purchaseObj.invoiceAmount" class="form-control" type="number">
+      </div>
+    </div>
+    <div class="row pt-3">
+      <div class="col-3 text-end">
+        <button class="btn btn-sm btn-secondary" routerLink="/purchase-list">Go To List</button>
+      </div>
+      <div class="col-3 text-center">
+        <button (click)="onSave()" class="btn btn-sm btn-success">Save Purchase</button>
+      </div>
+    </div>
+  </div>
+</div>

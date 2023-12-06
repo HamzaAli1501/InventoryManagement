@@ -1,6 +1,6 @@
 ﻿namespace InventoryManagement.Models;
 
-public partial class MainStock
+public sealed partial class MainStock
 {
     public int StockId { get; set; }
 
@@ -12,5 +12,5 @@ public partial class MainStock
 
     public DateTime? ModifiedDate { get; set; }
 
-    public virtual Product? Product { get; set; }
+    public Product? Product { get; set; }
 }

@@ -4,33 +4,29 @@ namespace InventoryManagement.Models;
 
 public partial class InventoryManagementContext : DbContext
 {
-    public InventoryManagementContext()
-    {
-    }
-
     public InventoryManagementContext(DbContextOptions<InventoryManagementContext> options)
         : base(options)
     {
     }
 
-    public virtual DbSet<MainStock>? MainStocks { get; set; }
+    public virtual DbSet<MainStock> MainStocks { get; set; }
 
-    public virtual DbSet<Product>? Products { get; set; }
+    public virtual DbSet<Product> Products { get; set; }
 
-    public virtual DbSet<Purchase>? Purchases { get; set; }
+    public virtual DbSet<Purchase> Purchases { get; set; }
 
-    public virtual DbSet<Sale>? Sales { get; set; }
+    public virtual DbSet<Sale> Sales { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 // #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseSqlServer(
-            "Data Source=.;Initial Catalog=InventoryManagementSystem;Integrated Security=True;TrustServerCertificate=true;");
+            "Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=DB-InventoryManagement;Data Source=localhost\\SQLEXPRESS;TrustServerCertificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<MainStock>(entity =>
         {
-            entity.HasKey(e => e.StockId).HasName("PK__MainStock__CBAD8743024CA650");
+            entity.HasKey(e => e.StockId).HasName("PK__MainStocks__CBAD8743024CA650");
 
             entity.ToTable("MainStock");
 
@@ -47,7 +43,7 @@ public partial class InventoryManagementContext : DbContext
 
             entity.HasOne(d => d.Product).WithMany(p => p.MainStocks)
                 .HasForeignKey(d => d.ProductId)
-                .HasConstraintName("FK__MainStock__produ__4316F928");
+                .HasConstraintName("FK__MainStocks__produ__4316F928");
         });
 
         modelBuilder.Entity<Product>(entity =>

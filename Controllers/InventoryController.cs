@@ -1,5 +1,5 @@
-using InventoryManagement.Interface;
 using InventoryManagement.Models;
+using InventoryManagement.Service;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InventoryManagement.Controllers;
@@ -8,12 +8,40 @@ namespace InventoryManagement.Controllers;
 [Route("[controller]")]
 public class InventoryController : ControllerBase
 {
-    private IInventoryService _service;
+    private readonly IInventoryService _service;
 
     public InventoryController(IInventoryService service)
     {
         _service = service;
     }
+
+    #region Product API
+
+    [HttpGet("getAllProducts")]
+    public ApiResponse GetAllProducts()
+    {
+        var resp = _service.GetAllProducts();
+        return resp.Result ? resp : new ApiResponse();
+    }
+
+    [HttpPost("createNewProducts")]
+    public ApiResponse CreateNewProducts([FromBody] Product obj)
+    {
+        if (!ModelState.IsValid)
+        {
+            return new ApiResponse()
+            {
+                Result = false,
+                Message = "Invalid Product Object"
+            };
+        }
+
+        var resp = _service.CreateNewProduct(obj);
+        return resp.Result ? resp : new ApiResponse();
+    }
+
+    #endregion
+
 
     #region Purchase API
 
@@ -27,15 +55,16 @@ public class InventoryController : ControllerBase
     [HttpPost("createNewPurchase")]
     public ApiResponse CreateNewPurchase([FromBody] Purchase obj)
     {
-        ApiResponse resp = new ApiResponse();
         if (!ModelState.IsValid)
         {
-            resp.Result = false;
-            resp.Message = "Invalid Model";
-            return resp;
+            return new ApiResponse()
+            {
+                Result = false,
+                Message = "Invalid Purchase Model"
+            };
         }
 
-        resp = _service.CreateNewPurchase(obj);
+        var resp = _service.CreateNewPurchase(obj);
         return resp.Result ? resp : new ApiResponse();
     }
 
@@ -47,55 +76,42 @@ public class InventoryController : ControllerBase
     public ApiResponse GetAllSale()
     {
         var resp = _service.GetAllSale();
-        if (resp.Result)
-        {
-            return resp;
-        }
-        else
-        {
-            return new ApiResponse();
-        }
+        return resp.Result ? resp : new ApiResponse();
     }
 
     [HttpPost("createNewSale")]
     public ApiResponse CreateNewSale([FromBody] Sale obj)
     {
-        ApiResponse resp = new ApiResponse();
         if (!ModelState.IsValid)
         {
-            resp.Result = false;
-            resp.Message = "Invalid Model";
-            return resp;
+            return new ApiResponse()
+            {
+                Result = false,
+                Message = "Invalid Purchase Model"
+            };
         }
 
-        resp = _service.CreateNewSale(obj);
-        if (resp.Result)
-        {
-            return resp;
-        }
-        else
-        {
-            return new ApiResponse();
-        }
+        var resp = _service.CreateNewSale(obj);
+        return resp.Result ? resp : new ApiResponse();
     }
 
     #endregion
 
     #region Stock
 
-    #endregion
+    [HttpGet("getAllStock")]
+    public ApiResponse GetAllStock()
+    {
+        var resp = _service.GetAllStocks();
+        return resp.Result ? resp : new ApiResponse();
+    }
 
-    // [HttpGet("getDashboardData")]
-    // public ApiResponse getDashboardData()
-    // {
-    //     var resp = _service.GetDashboardData();
-    //     if (resp.Result)
-    //     {
-    //         return resp;
-    //     }
-    //     else
-    //     {
-    //         return new ApiResponse();
-    //     }
-    // }
+    [HttpPost("checkStockByProductId")]
+    public ApiResponse CheckStockByProductId(int productId)
+    {
+        var resp = _service.CheckStockByProductId(productId);
+        return resp.Result ? resp : new ApiResponse();
+    }
+
+    #endregion
 }

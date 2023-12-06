@@ -1,4 +1,4 @@
-namespace InventoryManagement;
+namespace InventoryManagement.Models;
 
 public class WeatherForecast
 {
