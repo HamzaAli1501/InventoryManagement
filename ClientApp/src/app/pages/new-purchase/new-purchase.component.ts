@@ -1,5 +1,6 @@
-import {HttpClient} from '@angular/common/http';
-import {Component, Inject, OnInit} from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, Inject, OnInit } from '@angular/core';
+import { pipe, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-new-purchase',
@@ -40,16 +41,19 @@ export class NewPurchaseComponent implements OnInit {
 
   onSave() {
     let urlPath = `${this.url}/Inventory/CreateNewPurchase`;
-    this.httpService.post(urlPath, this.purchaseObj).subscribe((res: any) => {
-        if (res.result) {
-          alert("Purchase Done Success")
-        } else {
-          alert(res.message)
-        }
-      },
-      error => {
-        alert("API Error")
-      })
+
+    this.httpService.post(urlPath, this.purchaseObj).subscribe(
+      {
+        next: (response: any) => {
+          if (response.result) {
+            alert("Purchase Done Success")
+          } else {
+            alert(response.message)
+          }
+        },
+        error: err => alert("API Error")
+      }
+    );
   }
 
 }

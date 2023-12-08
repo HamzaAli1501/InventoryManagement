@@ -1,5 +1,5 @@
-import {HttpClient} from '@angular/common/http';
-import {Component, Inject} from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, Inject } from '@angular/core';
 
 @Component({
   selector: 'app-new-sale',
@@ -51,15 +51,18 @@ export class NewSaleComponent {
 
   onSave() {
     let urlPath = `${this.url}/Inventory/CreateNewSale`;
-    this.httpService.post(urlPath, this.saleObj).subscribe((res: any) => {
-        if (res.result) {
-          alert("Sale Done Success")
-        } else {
-          alert(res.message)
+    this.httpService.post(urlPath, this.saleObj).subscribe(
+      {
+        next: (res: any) => {
+          if (res.result) {
+            alert("Sale Done Success")
+          } else {
+            alert(res.message)
+          }
+        },
+        error: err => {
+          alert("API Error");
         }
-      },
-      error => {
-        alert("API Error")
-      })
+      });
   }
 }
